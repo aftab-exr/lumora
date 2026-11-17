@@ -14,8 +14,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "PULSE // Daily Telemetry",
-  description: "Habit execution, AI sentiment scoring, and mood analytics.",
+  title: "Lumora — Habit & Mood Telemetry",
+  description: "Habit execution, AI sentiment scoring, and mood telemetry.",
 };
 
 export default function RootLayout({ children }) {

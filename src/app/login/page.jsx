@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getBrowserSupabase } from "@/lib/supabase/client";
+import LumoraLogo from "@/components/LumoraLogo";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -22,10 +23,7 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-[#0A0B0D] px-4">
       <div className="w-full max-w-sm rounded-xl border border-[#22252C] bg-[#111317] p-6">
         <div className="flex items-center justify-between border-b border-[#22252C] pb-4">
-          <div className="flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-[#F3F4F6]">
-            <span className="h-2 w-2 rounded-xs bg-emerald-400" />
-            PULSE // AUTH
-          </div>
+          <LumoraLogo size="md" />
           <span className="font-mono text-[11px] text-[#5C6270]">OAUTH 2.0</span>
         </div>
 

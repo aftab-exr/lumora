@@ -9,6 +9,7 @@ import {
   Activity,
   LogOut,
 } from "lucide-react";
+import LumoraLogo from "./LumoraLogo";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Overview", icon: LayoutGrid },
@@ -25,12 +26,8 @@ export default function NavBar({ userEmail, todayISO, signOutAction }) {
       <div className="mx-auto flex h-12 max-w-6xl items-center justify-between gap-4 px-4">
         {/* Brand + Route Tabs */}
         <div className="flex items-center gap-6">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-[#F3F4F6]"
-          >
-            <span className="h-2 w-2 rounded-xs bg-emerald-400" />
-            PULSE
+          <Link href="/dashboard" className="flex items-center">
+            <LumoraLogo size="sm" />
           </Link>
 
           <nav className="flex items-center gap-1">

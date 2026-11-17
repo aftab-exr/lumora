@@ -1,8 +1,10 @@
-# PULSE // AI Habit Execution & Mood Telemetry
+# Lumora — AI Habit Execution & Mood Telemetry
+
+**Live:** https://lumora-ten-psi.vercel.app
 
 A full-stack personal performance, habit-tracking, and AI journaling web application built with **Next.js (App Router)**, **Supabase (PostgreSQL + Google OAuth + RLS)**, **Google Gemini AI**, and **Recharts**.
 
-Designed with a high-density **Compact Bento Telemetry** interface (`Plus Jakarta Sans` + `JetBrains Mono` with tabular numerals), PULSE turns daily workouts, task completion, and written reflections into a deterministic `0–100` daily performance score and multi-week habit-to-mood correlation analytics.
+Designed with a high-density **Compact Bento Telemetry** interface (`Plus Jakarta Sans` + `JetBrains Mono` with tabular numerals), Lumora turns daily workouts, task completion, and written reflections into a deterministic `0–100` daily performance score and multi-week habit-to-mood correlation analytics.
 
 ---
 
