@@ -4,20 +4,29 @@ on:
   schedule:
     # Runs every 5 days at 00:00 UTC to prevent the 7-day free-tier pause
     - cron: "0 0 */5 * *"
-  workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
+  workflow_dispatch:
 
 jobs:
   ping-supabase:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase REST API
+      - name: Ping Supabase API
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/")
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "Error: SUPABASE_URL or SUPABASE_ANON_KEY secret is empty."
+            exit 1
+          fi
+
+          CLEAN_URL="${SUPABASE_URL%/}"
+          STATUS=$(curl -s -o /tmp/response.txt -w "%{http_code}" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            "$CLEAN_URL/rest/v1/")
+
           echo "Supabase response status: $STATUS"
           if [ "$STATUS" -ne 200 ]; then
-            echo "Unexpected status code from Supabase"
+            echo "Response body: $(cat /tmp/response.txt)"
             exit 1
           fi
