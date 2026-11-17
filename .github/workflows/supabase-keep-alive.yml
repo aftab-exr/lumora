@@ -2,31 +2,37 @@ name: Keep Supabase Active
 
 on:
   schedule:
-    # Runs every 5 days at 00:00 UTC to prevent the 7-day free-tier pause
     - cron: "0 0 */5 * *"
   workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/supabase-keep-alive.yml"
 
 jobs:
   ping-supabase:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase API
+      - name: Ping Supabase Profiles Table
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          RAW_URL: ${{ secrets.SUPABASE_URL }}
+          RAW_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
+          SUPABASE_URL=$(printf '%s' "$RAW_URL" | tr -d '[:space:]')
+          SUPABASE_URL="${SUPABASE_URL%/}"
+          SUPABASE_ANON_KEY=$(printf '%s' "$RAW_KEY" | tr -d '[:space:]')
+
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
-            echo "Error: SUPABASE_URL or SUPABASE_ANON_KEY secret is empty."
+            echo "ERROR: SUPABASE_URL or SUPABASE_ANON_KEY secret is empty."
             exit 1
           fi
 
-          CLEAN_URL="${SUPABASE_URL%/}"
           STATUS=$(curl -s -o /tmp/response.txt -w "%{http_code}" \
             -H "apikey: $SUPABASE_ANON_KEY" \
-            "$CLEAN_URL/rest/v1/")
+            "$SUPABASE_URL/rest/v1/profiles?select=id&limit=1")
 
-          echo "Supabase response status: $STATUS"
+          echo "HTTP Status: $STATUS"
+          echo "Response Body: $(cat /tmp/response.txt)"
+
           if [ "$STATUS" -ne 200 ]; then
-            echo "Response body: $(cat /tmp/response.txt)"
             exit 1
           fi
