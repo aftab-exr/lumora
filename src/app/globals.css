@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    background-color: #0a0b0d;
+    color: #f3f4f6;
+    font-family: var(--font-sans);
+  }
+}
+
+.tabular-telemetry {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
